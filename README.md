@@ -1,64 +1,59 @@
-![](./resources/official_armmbed_example_badge.png)
-# Blinky Mbed OS example
+# SnakeGame
 
-The example project is part of the [Arm Mbed OS Official Examples](https://os.mbed.com/code/) and is the [getting started example for Mbed OS](https://os.mbed.com/docs/mbed-os/v5.14/quick-start/index.html). It contains an application that repeatedly blinks an LED on supported [Mbed boards](https://os.mbed.com/platforms/).
+## Introduction
 
-You can build the project with all supported [Mbed OS build tools](https://os.mbed.com/docs/mbed-os/latest/tools/index.html). However, this example project specifically refers to the command-line interface tool [Arm Mbed CLI](https://github.com/ARMmbed/mbed-cli#installing-mbed-cli).
-(Note: To see a rendered example you can import into the Arm Online Compiler, please see our [import quick start](https://os.mbed.com/docs/mbed-os/latest/quick-start/online-with-the-online-compiler.html#importing-the-code).)
+Welcome to our GitHub repository for the SnakeGame project! We've utilized a Nucleo microcontroller, an 8x8 LED matrix with an integrated Max7219 LED display driver, and an omnidirectional joystick. With the Mbed API, we've crafted an engaging SnakeGame that you can control using the joystick, displayed on the LED matrix. Guide the Snake to consume fruits, avoiding collisions and increasing your score, while enjoying sound effects through the piezo speaker. Get ready for a fun and challenging gaming experience! 🐍🎮
 
-1. [Install Mbed CLI](https://os.mbed.com/docs/mbed-os/latest/quick-start/offline-with-mbed-cli.html).
+## Components Needed
 
-1. Clone this repository on your system, and change the current directory to where the project was cloned:
+- Nucleo-F401RE Microcontroller
+- Breadboard
+- 8x8 LED matrix for displaying the game
+- Analog joystick for user control
+- Piezo speaker for game sounds
 
-    ```bash
-    $ git clone git@github.com:armmbed/mbed-os-example-blinky && cd mbed-os-example-blinky
-    ```
+## Circuit Design
 
-    Alternatively, you can download the example project with Arm Mbed CLI using the `import` subcommand:
-
-    ```bash
-    $ mbed import mbed-os-example-blinky && cd mbed-os-example-blinky
-    ```
+![image](https://github.com/BenTheurich/EmbeddedSnakeGame/assets/81211973/70f471eb-55f2-447b-a883-f0a14a4b8995)
 
 
-## Application functionality
+## Implementation
 
-The `main()` function is the single thread in the application. It toggles the state of a digital output connected to an LED on the board.
+For the Snake object, we used a linked list to track each body part. The Snake moves by adding a node to the head and removing the tail. When the Snake eats a fruit, it moves forward without removing the tail. We found that using a linked list was the best way to keep track of the Snake's position.
 
-## Building and running
+The Game object uses a 2D array to represent the board imposed on the 8x8 Matrix. Each row is represented by 0s for LEDs that should be turned off and 1s for LEDs that should be turned on. This allows us to create a binary number based on each row and update the LED matrix accordingly.
 
-1. Connect a USB cable between the USB port on the board and the host computer.
-2. <a name="build_cmd"></a> Run the following command to build the example project and program the microcontroller flash memory:
-    ```bash
-    $ mbed compile -m <TARGET> -t <TOOLCHAIN> --flash
-    ```
-The binary is located at `./BUILD/<TARGET>/<TOOLCHAIN>/mbed-os-example-blinky.bin`.
+## Results
 
-Alternatively, you can manually copy the binary to the board, which you mount on the host computer over USB.
+This is the final result of our project. In addition to what we originally planned to create, we were able to add nice-to-have features, such as animations, game sounds, and a decorative board for our components to attach to.
 
-Depending on the target, you can build the example project with the `GCC_ARM`, `ARM` or `IAR` toolchain. After installing Arm Mbed CLI, run the command below to determine which toolchain supports your target:
+![image](https://github.com/BenTheurich/EmbeddedSnakeGame/assets/81211973/b3dbb8cf-3422-463b-bfcd-d18be172d914)
 
-```bash
-$ mbed compile -S
-```
+Link for video demonstration:
+https://drive.google.com/file/d/1f-Nvek4yxz_EDnvyU3LeZlxIyDfSh_NV/view
 
-## Expected output
-The LED on your target turns on and off every 500 milliseconds.
+## Usage
+
+1. Connect the components as shown in the circuit diagram.
+2. Compile and upload the code to the Nucleo-F401RE Microcontroller.
+3. Once the matrix displays the starting pattern, press "select" on the joystick to start the game.
+4. Use the joystick to control the direction of the Snake.
+5. Guide the Snake to consume fruits and increase your score.
+6. Avoid collisions with the Snake's body and the edge of the game board.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- The inspiration for this project came from a video of a pong game using similar components.
+- We referred to various implementations of the SnakeGame using an 8x8 matrix for ideas and references.
+
+## Team Members
+
+- Cody McKinney
+- Carter Rath
+- Ben Theurich
 
 
-## Troubleshooting
-If you have problems, you can review the [documentation](https://os.mbed.com/docs/latest/tutorials/debugging.html) for suggestions on what could be wrong and how to fix it.
-
-## Related Links
-
-* [Mbed OS Stats API](https://os.mbed.com/docs/latest/apis/mbed-statistics.html).
-* [Mbed OS Configuration](https://os.mbed.com/docs/latest/reference/configuration.html).
-* [Mbed OS Serial Communication](https://os.mbed.com/docs/latest/tutorials/serial-communication.html).
-* [Mbed OS bare metal](https://os.mbed.com/docs/mbed-os/latest/reference/mbed-os-bare-metal.html).
-* [Mbed boards](https://os.mbed.com/platforms/).
-
-### License and contributions
-
-The software is provided under Apache-2.0 license. Contributions to this project are accepted under the same license. Please see contributing.md for more info.
-
-This project contains code from other projects. The original license text is included in those source files. They must comply with our license guide.
